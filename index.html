@@ -22,6 +22,16 @@
 
   <main class="container">
     <section class="controls" aria-label="Snack filters">
+<div class="parkButtons" style="margin-bottom: 10px;">
+  <button onclick="setPark('all')">All</button>
+  <button onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
+  <button onclick="setPark('EPCOT')">EPCOT</button>
+  <button onclick="setPark('Hollywood Studios')">Hollywood</button>
+  <button onclick="setPark('Animal Kingdom')">Animal Kingdom</button>
+  <button onclick="setPark('Disney Springs')">Disney Springs</button>
+  <button onclick="setPark('Resort / Hotel')">Resorts</button>
+  <button onclick="setPark('BoardWalk')">BoardWalk</button>
+</div>
       <div class="searchBox">
         <label for="searchInput">Search snacks</label>
         <input id="searchInput" type="search" placeholder="Search by snack or location" />
@@ -79,6 +89,14 @@
     </article>
   </template>
 
+  
+function setPark(park) {
+  state.park = park;
+  document.getElementById("parkFilter").value = park === "all" ? "all" : park;
+  render();
+}
+
+  
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
