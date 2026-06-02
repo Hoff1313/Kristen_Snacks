@@ -1,7 +1,19 @@
 let currentPark = "all";
+let currentTried = "all";
 
 function setPark(park) {
   currentPark = park;
+  render();
+}
+
+function setTried(value) {
+  currentTried = value;
+  render();
+}
+
+function toggleTried(id) {
+  const snack = SNACKS.find(s => s.id === id);
+  snack.tried = !snack.tried;
   render();
 }
 
@@ -10,9 +22,18 @@ function render() {
   grid.innerHTML = "";
 
   const filtered = SNACKS.filter(s => {
-    if (currentPark === "all") return true;
-    if (currentPark === "Resort") return s.park.includes("Resort");
-    return s.park === currentPark;
+
+    let parkMatch =
+      currentPark === "all" ||
+      (currentPark === "Resort" && s.park.includes("Resort")) ||
+      s.park === currentPark;
+
+    let triedMatch =
+      currentTried === "all" ||
+      (currentTried === true && s.tried) ||
+      (currentTried === false && !s.tried);
+
+    return parkMatch && triedMatch;
   });
 
   filtered.forEach(snack => {
@@ -20,12 +41,12 @@ function render() {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${snack.image}" />
+      <img src="${snack.image}">
       <h3>${snack.name}</h3>
-      <div class="badge">${snack.park}</div>
-      <div class="badge">${snack.location || ""}</div>
+      <div class="park">${snack.park}</div>
+      <div class="location">${snack.location || ""}</div>
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" ${snack.tried ? "checked" : ""} onchange="toggleTried(${snack.id})">
         Tried
       </label>
     `;
