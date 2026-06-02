@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   background: #fff7f2;
   margin: 0;
   padding: 20px;
@@ -14,17 +14,22 @@ h1 {
   margin-bottom: 20px;
 }
 
-.filters button {
-  padding: 10px;
+.filter-group {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 14px;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   background: #ff7a7a;
   color: white;
   cursor: pointer;
+  font-weight: bold;
 }
 
-.filters button:hover {
+button:hover {
   background: #ff4d4d;
 }
 
@@ -38,7 +43,7 @@ h1 {
   background: white;
   border-radius: 15px;
   padding: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .card img {
@@ -50,7 +55,19 @@ h1 {
   margin: 10px 0 5px;
 }
 
-.badge {
-  font-size: 12px;
+.park {
+  color: #ff4d4d;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.location {
   color: #666;
+  font-size: 13px;
+  font-style: italic;
+}
+
+label {
+  display: block;
+  margin-top: 8px;
 }
