@@ -107,3 +107,16 @@ code { background: #fff4ef; padding: 2px 7px; border-radius: 8px; }
   .controls { grid-template-columns: 1fr; margin-top: -20px; }
   .hero { padding-top: 56px; }
 }
+
+.parkButtons button {
+  margin: 4px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.parkButtons button:hover {
+  background: #ffe5e5;
+}
