@@ -153,3 +153,9 @@ clearChecks.addEventListener('click', () => {
 
 populateParkFilter();
 render();
+
+function setPark(park) {
+  state.park = park;
+  document.getElementById("parkFilter").value = park === "all" ? "all" : park;
+  render();
+}
