@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disney Snack Tracker</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -12,13 +12,23 @@
 <h1>Disney Snack Tracker</h1>
 
 <div class="filters">
-  <button onclick="setPark('all')">All</button>
-  <button onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
-  <button onclick="setPark('EPCOT')">EPCOT</button>
-  <button onclick="setPark('Hollywood Studios')">Hollywood</button>
-  <button onclick="setPark('Animal Kingdom')">Animal Kingdom</button>
-  <button onclick="setPark('Disney Springs')">Disney Springs</button>
-  <button onclick="setPark('Resort')">Resorts</button>
+
+  <div class="filter-group">
+    <button onclick="setPark('all')">All</button>
+    <button onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
+    <button onclick="setPark('EPCOT')">EPCOT</button>
+    <button onclick="setPark('Hollywood Studios')">Hollywood</button>
+    <button onclick="setPark('Animal Kingdom')">Animal Kingdom</button>
+    <button onclick="setPark('Disney Springs')">Disney Springs</button>
+    <button onclick="setPark('Resort')">Resorts</button>
+  </div>
+
+  <div class="filter-group">
+    <button onclick="setTried('all')">All</button>
+    <button onclick="setTried(true)">Tried ✅</button>
+    <button onclick="setTried(false)">Not Tried</button>
+  </div>
+
 </div>
 
 <div id="snackGrid" class="grid"></div>
@@ -28,3 +38,4 @@
 
 </body>
 </html>
+``
