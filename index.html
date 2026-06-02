@@ -4,100 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Disney Snack Tracker</title>
-  <meta name="description" content="A sortable Disney World snack tracker with park filters and tried checkboxes." />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
-  <header class="hero">
-    <div class="hero__content">
-      <p class="eyebrow">Walt Disney World Snack List</p>
-      <h1>Disney Snack Tracker</h1>
-      <p class="hero__text">Track which snacks you've tried, filter by park, and keep your Disney food bucket list sorted your way.</p>
-      <div class="hero__badges">
-        <span id="countAll" class="badge">0 snacks</span>
-        <span id="countTried" class="badge badge--accent">0 tried</span>
-      </div>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="controls" aria-label="Snack filters">
-<div class="parkButtons" style="margin-bottom: 10px;">
+<body>
+
+<h1>Disney Snack Tracker</h1>
+
+<div class="filters">
   <button onclick="setPark('all')">All</button>
   <button onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
   <button onclick="setPark('EPCOT')">EPCOT</button>
   <button onclick="setPark('Hollywood Studios')">Hollywood</button>
   <button onclick="setPark('Animal Kingdom')">Animal Kingdom</button>
   <button onclick="setPark('Disney Springs')">Disney Springs</button>
-  <button onclick="setPark('Resort / Hotel')">Resorts</button>
-  <button onclick="setPark('BoardWalk')">BoardWalk</button>
+  <button onclick="setPark('Resort')">Resorts</button>
 </div>
-      <div class="searchBox">
-        <label for="searchInput">Search snacks</label>
-        <input id="searchInput" type="search" placeholder="Search by snack or location" />
-      </div>
-      <div class="controlGroup">
-        <label for="parkFilter">Park / Area</label>
-        <select id="parkFilter">
-          <option value="all">All parks & areas</option>
-        </select>
-      </div>
-      <div class="controlGroup">
-        <label for="sortBy">Sort by</label>
-        <select id="sortBy">
-          <option value="park">Park</option>
-          <option value="name">Snack name</option>
-          <option value="tried">Tried first</option>
-          <option value="untried">Need to try first</option>
-        </select>
-      </div>
-      <div class="controlGroup">
-        <label for="statusFilter">Status</label>
-        <select id="statusFilter">
-          <option value="all">All snacks</option>
-          <option value="tried">Tried</option>
-          <option value="untried">Not tried yet</option>
-        </select>
-      </div>
-      <button id="clearChecks" class="button button--secondary" type="button">Reset all checkmarks</button>
-    </section>
 
-    <section class="note">
-      <strong>Note:</strong> Some park tags are based directly on your notes, while a few are inferred from location names so you can sort them more easily. You can edit any item later in <code>data.js</code>.
-    </section>
+<div id="snackGrid" class="grid"></div>
 
-    <section id="snackGrid" class="grid" aria-live="polite"></section>
-  </main>
+<script src="data.js"></script>
+<script src="app.js"></script>
 
-  <template id="snackCardTemplate">
-    <article class="card">
-      <div class="card__imageWrap">
-        <img class="card__image" alt="" loading="lazy" />
-      </div>
-      <div class="card__body">
-        <div class="card__top">
-          <span class="pill"></span>
-          <label class="checkbox">
-            <input type="checkbox" class="triedCheckbox" />
-            <span>I tried this</span>
-          </label>
-        </div>
-        <h2 class="card__title"></h2>
-        <p class="card__location"></p>
-        <p class="card__note"></p>
-      </div>
-    </article>
-  </template>
-
-  
-function setPark(park) {
-  state.park = park;
-  document.getElementById("parkFilter").value = park === "all" ? "all" : park;
-  render();
-}
-
-  
-  <script src="data.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
