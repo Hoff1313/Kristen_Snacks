@@ -37,8 +37,8 @@ function isResortPark(value) {
 
 function setPark(park) {
   currentPark = park;
-  clearActive("park-group");
 
+  clearActive("park-group");
   const btn = document.getElementById(`park-${park}`);
   if (btn) btn.classList.add("active");
 
@@ -47,8 +47,8 @@ function setPark(park) {
 
 function setTried(value) {
   currentTried = value;
-  clearActive("tried-group");
 
+  clearActive("tried-group");
   const btn = document.getElementById(`tried-${value}`);
   if (btn) btn.classList.add("active");
 
@@ -64,37 +64,10 @@ function toggleTried(id) {
   render();
 }
 
-function escapeHtml(text) {
-  return String(text || "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
-
-function renderImage(snack) {
-  if (!snack.image) return "";
-
-  const img = String(snack.image).trim();
-
-  // Supports either:
-  // 1) image: "snack_01.png"
-  // 2) image: "<img src='snack_01.png'>"
-  if (img.startsWith("<img")) {
-    return img;
-  }
-
-  return `<img src="${img}" alt="${escapeHtml(snack.name)}" loading="lazy">`;
-}
-
-function buildDisneyMapLink(snack) {
-  const query = encodeURIComponent(`${snack.location || snack.name} ${snack.park} Walt Disney World`);
-  return `https://disneyworld.disney.go.com/maps/?search=${query}`;
-}
-
 function buildGoogleMapLink(snack) {
-  const query = encodeURIComponent(`${snack.location || snack.name} ${snack.park} Walt Disney World`);
+  const query = encodeURIComponent(
+    `${snack.location || snack.name} ${snack.park} Walt Disney World`
+  );
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
@@ -105,20 +78,12 @@ function render() {
   grid.innerHTML = "";
 
   const filtered = SNACKS.filter(snack => {
-    const snackPark = normalizePark(snack.park);
-    const wantedPark = normalizePark(currentPark);
+    let parkMatch =
+      currentPark === "all" ||
+      (currentPark === "Resort" && isResortPark(snack.park)) ||
+      normalizePark(snack.park) === normalizePark(currentPark);
 
-    let parkMatch = false;
-
-    if (wantedPark === "all") {
-      parkMatch = true;
-    } else if (wantedPark === "resort") {
-      parkMatch = isResortPark(snack.park);
-    } else {
-      parkMatch = snackPark === wantedPark;
-    }
-
-    const triedMatch =
+    let triedMatch =
       currentTried === "all" ||
       (currentTried === true && snack.tried) ||
       (currentTried === false && !snack.tried);
@@ -127,26 +92,24 @@ function render() {
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p>No snacks match this filter.</p>`;
+    grid.innerHTML = "<p>No snacks match this filter.</p>";
     return;
   }
 
   filtered.forEach(snack => {
-    const disneyLink = buildDisneyMapLink(snack);
-    const googleLink = buildGoogleMapLink(snack);
+    const mapLink = buildGoogleMapLink(snack);
 
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      ${renderImage(snack)}
-      <h3>${escapeHtml(snack.name)}</h3>
-      <div class="park">${escapeHtml(snack.park)}</div>
-      <div class="location">${escapeHtml(snack.location || "")}</div>
+      <img src="${snack.image}">
+      <h3>${snack.name}</h3>
+      <div class="park">${snack.park}</div>
+      <div class="location">${snack.location || ""}</div>
 
       <div class="links">
-        <a class="mapBtn disneyBtn" href="${disneyLink}" target="_blank" rel="noopener noreferrer">📍 Disney Map</a>
-        <a class="mapBtn googleBtn" href="${googleLink}" target="_blank" rel="noopener noreferrer">🗺 Google Maps</a>
+        <a href="${mapLink}" target="_blank" class="mapBtn googleBtn">🗺 Open in Maps</a>
       </div>
 
       <label>
@@ -160,11 +123,7 @@ function render() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const defaultPark = document.getElementById("park-all");
-  const defaultTried = document.getElementById("tried-all");
-
-  if (defaultPark) defaultPark.classList.add("active");
-  if (defaultTried) defaultTried.classList.add("active");
-
+  document.getElementById("park-all")?.classList.add("active");
+  document.getElementById("tried-all")?.classList.add("active");
   render();
 });
