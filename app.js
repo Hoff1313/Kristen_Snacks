@@ -12,13 +12,10 @@ SNACKS.forEach(s => {
 
 function saveState() {
   let data = {};
-  SNACKS.forEach(s => {
-    data[s.id] = s.tried;
-  });
+  SNACKS.forEach(s => data[s.id] = s.tried);
   localStorage.setItem("snack-tracker", JSON.stringify(data));
 }
 
-// ✅ CLEAR ONLY A SPECIFIC GROUP
 function clearActive(groupId) {
   document.querySelectorAll(`#${groupId} button`).forEach(btn => {
     btn.classList.remove("active");
@@ -28,7 +25,7 @@ function clearActive(groupId) {
 function setPark(park) {
   currentPark = park;
 
-  clearActive("park-group");  // ONLY clears park buttons
+  clearActive("park-group");
   document.getElementById(`park-${park}`).classList.add("active");
 
   render();
@@ -37,7 +34,7 @@ function setPark(park) {
 function setTried(value) {
   currentTried = value;
 
-  clearActive("tried-group");  // ONLY clears tried buttons
+  clearActive("tried-group");
   document.getElementById(`tried-${value}`).classList.add("active");
 
   render();
@@ -90,7 +87,6 @@ function render() {
   });
 }
 
-// ✅ Set defaults
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("park-all").classList.add("active");
   document.getElementById("tried-all").classList.add("active");
