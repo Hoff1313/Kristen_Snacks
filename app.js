@@ -1,7 +1,7 @@
 let currentPark = "all";
 let currentTried = "all";
 
-// load saved data
+// Load saved tried state
 let saved = JSON.parse(localStorage.getItem("snack-tracker")) || {};
 
 SNACKS.forEach(snack => {
@@ -12,7 +12,9 @@ SNACKS.forEach(snack => {
 
 function saveState() {
   let data = {};
-  SNACKS.forEach(s => data[s.id] = s.tried);
+  SNACKS.forEach(snack => {
+    data[snack.id] = snack.tried;
+  });
   localStorage.setItem("snack-tracker", JSON.stringify(data));
 }
 
@@ -22,64 +24,129 @@ function clearActive(groupId) {
   });
 }
 
+function normalizePark(value) {
+  return (value || "").trim().toLowerCase();
+}
+
+function isResortPark(value) {
+  const p = normalizePark(value);
+  return p.includes("resort") || p.includes("polynesian") || p.includes("port orleans") ||
+         p.includes("pop century") || p.includes("riviera") || p.includes("contemporary") ||
+         p.includes("grand floridian");
+}
+
 function setPark(park) {
   currentPark = park;
   clearActive("park-group");
-  document.getElementById(`park-${park}`).classList.add("active");
+
+  const btn = document.getElementById(`park-${park}`);
+  if (btn) btn.classList.add("active");
+
   render();
 }
 
 function setTried(value) {
   currentTried = value;
   clearActive("tried-group");
-  document.getElementById(`tried-${value}`).classList.add("active");
+
+  const btn = document.getElementById(`tried-${value}`);
+  if (btn) btn.classList.add("active");
+
   render();
 }
 
 function toggleTried(id) {
-  let snack = SNACKS.find(s => s.id === id);
+  const snack = SNACKS.find(s => s.id === id);
+  if (!snack) return;
+
   snack.tried = !snack.tried;
   saveState();
   render();
 }
 
+function escapeHtml(text) {
+  return String(text || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderImage(snack) {
+  if (!snack.image) return "";
+
+  const img = String(snack.image).trim();
+
+  // Supports either:
+  // 1) image: "snack_01.png"
+  // 2) image: "<img src='snack_01.png'>"
+  if (img.startsWith("<img")) {
+    return img;
+  }
+
+  return `<img src="${img}" alt="${escapeHtml(snack.name)}" loading="lazy">`;
+}
+
+function buildDisneyMapLink(snack) {
+  const query = encodeURIComponent(`${snack.location || snack.name} ${snack.park} Walt Disney World`);
+  return `https://disneyworld.disney.go.com/maps/?search=${query}`;
+}
+
+function buildGoogleMapLink(snack) {
+  const query = encodeURIComponent(`${snack.location || snack.name} ${snack.park} Walt Disney World`);
+  return `https://www.google.com/maps/search/?api=1&query=${query}`;
+}
+
 function render() {
   const grid = document.getElementById("snackGrid");
+  if (!grid) return;
+
   grid.innerHTML = "";
 
-  const filtered = SNACKS.filter(s => {
+  const filtered = SNACKS.filter(snack => {
+    const snackPark = normalizePark(snack.park);
+    const wantedPark = normalizePark(currentPark);
 
-    let parkMatch =
-      currentPark === "all" ||
-      (currentPark === "Resort" && s.park.includes("Resort")) ||
-      s.park === currentPark;
+    let parkMatch = false;
 
-    let triedMatch =
+    if (wantedPark === "all") {
+      parkMatch = true;
+    } else if (wantedPark === "resort") {
+      parkMatch = isResortPark(snack.park);
+    } else {
+      parkMatch = snackPark === wantedPark;
+    }
+
+    const triedMatch =
       currentTried === "all" ||
-      (currentTried === true && s.tried) ||
-      (currentTried === false && !s.tried);
+      (currentTried === true && snack.tried) ||
+      (currentTried === false && !snack.tried);
 
     return parkMatch && triedMatch;
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = "<p>No snacks match this filter.</p>";
+    grid.innerHTML = `<p>No snacks match this filter.</p>`;
     return;
   }
 
   filtered.forEach(snack => {
+    const disneyLink = buildDisneyMapLink(snack);
+    const googleLink = buildGoogleMapLink(snack);
+
     const card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${snack.image}">
-      <h3>${snack.name}</h3>
-      <div class="park">${snack.park}</div>
-      <div class="location">${snack.location || ""}</div>
+      ${renderImage(snack)}
+      <h3>${escapeHtml(snack.name)}</h3>
+      <div class="park">${escapeHtml(snack.park)}</div>
+      <div class="location">${escapeHtml(snack.location || "")}</div>
 
       <div class="links">
-        ${snack.disney ? `<a class="mapBtn" href="${snack.disney}" target="_blank">📍 Disney</a>` : ""}
-        ${snack.google ? `<a class="mapBtn alt" href="${snack.google}" target="_blank">🗺 Google</a>` : ""}
+        <a class="mapBtn disneyBtn" href="${disneyLink}" target="_blank" rel="noopener noreferrer">📍 Disney Map</a>
+        <a class="mapBtn googleBtn" href="${googleLink}" target="_blank" rel="noopener noreferrer">🗺 Google Maps</a>
       </div>
 
       <label>
@@ -92,9 +159,12 @@ function render() {
   });
 }
 
-// default selections
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("park-all").classList.add("active");
-  document.getElementById("tried-all").classList.add("active");
+  const defaultPark = document.getElementById("park-all");
+  const defaultTried = document.getElementById("tried-all");
+
+  if (defaultPark) defaultPark.classList.add("active");
+  if (defaultTried) defaultTried.classList.add("active");
+
   render();
 });
