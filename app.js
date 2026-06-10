@@ -1,3 +1,4 @@
+
 let currentPark = "all";
 let currentTried = "all";
 
@@ -17,13 +18,28 @@ function saveState() {
   localStorage.setItem("snack-tracker", JSON.stringify(data));
 }
 
+// ✅ CLEAR ONLY A SPECIFIC GROUP
+function clearActive(groupId) {
+  document.querySelectorAll(`#${groupId} button`).forEach(btn => {
+    btn.classList.remove("active");
+  });
+}
+
 function setPark(park) {
   currentPark = park;
+
+  clearActive("park-group");  // ONLY clears park buttons
+  document.getElementById(`park-${park}`).classList.add("active");
+
   render();
 }
 
 function setTried(value) {
   currentTried = value;
+
+  clearActive("tried-group");  // ONLY clears tried buttons
+  document.getElementById(`tried-${value}`).classList.add("active");
+
   render();
 }
 
@@ -31,7 +47,7 @@ function toggleTried(id) {
   const snack = SNACKS.find(s => s.id === id);
   snack.tried = !snack.tried;
 
-  saveState();   // ✅ SAVE HERE
+  saveState();
 
   render();
 }
@@ -74,4 +90,10 @@ function render() {
   });
 }
 
-render();
+// ✅ Set defaults
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("park-all").classList.add("active");
+  document.getElementById("tried-all").classList.add("active");
+
+  render();
+});
