@@ -41,7 +41,7 @@ function render() {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${snack.image}">
+      <img src="${snack.image}" alt="${snack.name}">
       <h3>${snack.name}</h3>
       <div class="park">${snack.park}</div>
       <div class="location">${snack.location || ""}</div>
@@ -56,3 +56,4 @@ function render() {
 }
 
 render();
+``
