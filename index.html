@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Disney Snack Tracker</title>
 
-  <!-- ✅ Correct stylesheet link -->
+  <!-- ✅ FIXED CSS LINK -->
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -15,7 +15,6 @@
 
 <div class="filters">
 
-  <!-- ✅ PARK BUTTONS -->
   <div id="park-group" class="filter-group">
     <button id="park-all" onclick="setPark('all')">All</button>
     <button id="park-Magic Kingdom" onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
@@ -26,7 +25,20 @@
     <button id="park-Resort" onclick="setPark('Resort')">Resorts</button>
   </div>
 
-  <!-- ✅ TRIED FILTER BUTTONS -->
   <div id="tried-group" class="filter-group">
     <button id="tried-all" onclick="setTried('all')">All</button>
     <button id="tried-true" onclick="setTried(true)">Tried ✅</button>
+    <button id="tried-false" onclick="setTried(false)">Not Tried</button>
+  </div>
+
+</div>
+
+<div id="snackGrid" class="grid"></div>
+
+<!-- ✅ FIXED SCRIPT LOADING -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
+``
