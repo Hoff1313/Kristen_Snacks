@@ -29,7 +29,7 @@ window.SNACKS = [
   { id: 28, name: "Mickey Strawberry Cookie Sandwich", park: "Magic Kingdom", location: "Big Top Souvenirs / Goofy’s Candy Company", image: "snack_29.png", tried: false },
   { id: 29, name: "Donut Hole Skewers", park: "Disney Springs", location: "Everglazed Donuts", image: "snack_30.png", tried: false },
   { id: 30, name: "Frozen Vanilla Wafer Sandwich", park: "EPCOT", location: "Mitsukoshi (Japan Pavilion)", image: "snack_31.png", tried: false },
-  { id: 31, name: "Fairy Bread Cake", park: "Animal Kingdom", location: "Pizzafari", image: "snack_32.png", tried: false }
-  { id: 32, name: "Pretzel bites", park: "Animal Kingdom", location: "Isle of Java", image: "snack_33.png", tried: false }
+  { id: 31, name: "Fairy Bread Cake", park: "Animal Kingdom", location: "Pizzafari", image: "snack_32.png", tried: false },
+  { id: 32, name: "Pretzel bites", park: "Animal Kingdom", location: "Isle of Java", image: "snack_33.png", tried: false },
   { id: 33, name: "Chicken Goof-ups", park: "Epcot", location: "Grab-N-Goof", image: "snack_34.png", tried: false }
 ];
