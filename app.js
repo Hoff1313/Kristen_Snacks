@@ -1,5 +1,22 @@
+
 let currentPark = "all";
 let currentTried = "all";
+
+// Load saved state
+let saved = JSON.parse(localStorage.getItem("snack-tracker")) || {};
+SNACKS.forEach(s => {
+  if (saved[s.id] !== undefined) {
+    s.tried = saved[s.id];
+  }
+});
+
+function saveState() {
+  let data = {};
+  SNACKS.forEach(s => {
+    data[s.id] = s.tried;
+  });
+  localStorage.setItem("snack-tracker", JSON.stringify(data));
+}
 
 function setPark(park) {
   currentPark = park;
@@ -14,6 +31,9 @@ function setTried(value) {
 function toggleTried(id) {
   const snack = SNACKS.find(s => s.id === id);
   snack.tried = !snack.tried;
+
+  saveState();   // ✅ SAVE HERE
+
   render();
 }
 
@@ -41,7 +61,7 @@ function render() {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${snack.image}" alt="${snack.name}">
+      <img src="${snack.image}">
       <h3>${snack.name}</h3>
       <div class="park">${snack.park}</div>
       <div class="location">${snack.location || ""}</div>
@@ -56,4 +76,3 @@ function render() {
 }
 
 render();
-``
