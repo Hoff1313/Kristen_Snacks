@@ -1,7 +1,7 @@
 let currentPark = "all";
 let currentTried = "all";
 
-// Load saved tried state from browser
+// load saved data
 let saved = JSON.parse(localStorage.getItem("snack-tracker")) || {};
 
 SNACKS.forEach(snack => {
@@ -12,9 +12,7 @@ SNACKS.forEach(snack => {
 
 function saveState() {
   let data = {};
-  SNACKS.forEach(snack => {
-    data[snack.id] = snack.tried;
-  });
+  SNACKS.forEach(s => data[s.id] = s.tried);
   localStorage.setItem("snack-tracker", JSON.stringify(data));
 }
 
@@ -26,28 +24,20 @@ function clearActive(groupId) {
 
 function setPark(park) {
   currentPark = park;
-
   clearActive("park-group");
-  const btn = document.getElementById(`park-${park}`);
-  if (btn) btn.classList.add("active");
-
+  document.getElementById(`park-${park}`).classList.add("active");
   render();
 }
 
 function setTried(value) {
   currentTried = value;
-
   clearActive("tried-group");
-  const btn = document.getElementById(`tried-${value}`);
-  if (btn) btn.classList.add("active");
-
+  document.getElementById(`tried-${value}`).classList.add("active");
   render();
 }
 
 function toggleTried(id) {
-  const snack = SNACKS.find(s => s.id === id);
-  if (!snack) return;
-
+  let snack = SNACKS.find(s => s.id === id);
   snack.tried = !snack.tried;
   saveState();
   render();
@@ -55,26 +45,25 @@ function toggleTried(id) {
 
 function render() {
   const grid = document.getElementById("snackGrid");
-  if (!grid) return;
-
   grid.innerHTML = "";
 
-  const filtered = SNACKS.filter(snack => {
+  const filtered = SNACKS.filter(s => {
+
     let parkMatch =
       currentPark === "all" ||
-      (currentPark === "Resort" && snack.park.includes("Resort")) ||
-      snack.park === currentPark;
+      (currentPark === "Resort" && s.park.includes("Resort")) ||
+      s.park === currentPark;
 
     let triedMatch =
       currentTried === "all" ||
-      (currentTried === true && snack.tried) ||
-      (currentTried === false && !snack.tried);
+      (currentTried === true && s.tried) ||
+      (currentTried === false && !s.tried);
 
     return parkMatch && triedMatch;
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<p>No snacks match this filter.</p>`;
+    grid.innerHTML = "<p>No snacks match this filter.</p>";
     return;
   }
 
@@ -83,18 +72,18 @@ function render() {
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${snack.image}" alt="${snack.name}">
+      <img src="${snack.image}">
       <h3>${snack.name}</h3>
       <div class="park">${snack.park}</div>
       <div class="location">${snack.location || ""}</div>
 
       <div class="links">
-        ${snack.disney ? `<a class="mapBtn" href="${snack.disney}" target="_blank" rel="noopener noreferrer">📍 Disney</a>` : ""}
-        ${snack.google ? `<a class="mapBtn alt" href="${snack.google}" target="_blank" rel="noopener noreferrer">🗺 Google</a>` : ""}
+        ${snack.disney ? `<a class="mapBtn" href="${snack.disney}" target="_blank">📍 Disney</a>` : ""}
+        ${snack.google ? `<a class="mapBtn alt" href="${snack.google}" target="_blank">🗺 Google</a>` : ""}
       </div>
 
       <label>
-        <input type="checkbox" ${snack.tried ? "checked" : ""} onchange="toggleTried(${snack.id})">
+        <input type="checkbox" ${snack.tried ? "checked" : ""} onclick="toggleTried(${snack.id})">
         Tried
       </label>
     `;
@@ -103,12 +92,9 @@ function render() {
   });
 }
 
+// default selections
 document.addEventListener("DOMContentLoaded", () => {
-  const defaultPark = document.getElementById("park-all");
-  const defaultTried = document.getElementById("tried-all");
-
-  if (defaultPark) defaultPark.classList.add("active");
-  if (defaultTried) defaultTried.classList.add("active");
-
+  document.getElementById("park-all").classList.add("active");
+  document.getElementById("tried-all").classList.add("active");
   render();
 });
