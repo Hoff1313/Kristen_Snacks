@@ -2,9 +2,8 @@
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   background: #fff7f2;
-  margin: 0;
-  padding: 20px;
   text-align: center;
+  padding: 20px;
 }
 
 h1 {
@@ -16,24 +15,17 @@ h1 {
 }
 
 button {
-  padding: 10px 14px;
+  padding: 10px;
   margin: 5px;
   border-radius: 12px;
   border: none;
   background: #ff7a7a;
   color: white;
   cursor: pointer;
-  font-weight: bold;
 }
 
-button:hover {
-  background: #ff4d4d;
-}
-
-/* ✅ ACTIVE BUTTON */
 button.active {
-  background: #222;
-  color: white;
+  background: black;
 }
 
 .grid {
@@ -44,8 +36,8 @@ button.active {
 
 .card {
   background: white;
-  border-radius: 15px;
   padding: 10px;
+  border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
@@ -55,11 +47,29 @@ button.active {
 }
 
 .park {
+  font-weight: bold;
   color: #ff4d4d;
-  font-weight: 700;
 }
 
 .location {
   color: #666;
   font-style: italic;
+}
+
+.links {
+  margin-top: 8px;
+}
+
+.mapBtn {
+  margin: 3px;
+  padding: 5px 8px;
+  background: green;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.mapBtn.alt {
+  background: blue;
 }
