@@ -1,73 +1,41 @@
-body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #fff7f2;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
-}
 
-h1 {
-  margin-bottom: 20px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disney Snack Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 
-.filters {
-  margin-bottom: 20px;
-}
+<body>
 
-.filter-group {
-  margin-bottom: 10px;
-}
+<h1>Disney Snack Tracker</h1>
 
-button {
-  padding: 10px 14px;
-  margin: 5px;
-  border-radius: 12px;
-  border: none;
-  background: #ff7a7a;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
+<div class="filters">
 
-button:hover {
-  background: #ff4d4d;
-}
+  <div class="filter-group">
+    <button id="park-all" onclick="setPark('all')">All</button>
+    <button id="park-Magic Kingdom" onclick="setPark('Magic Kingdom')">Magic Kingdom</button>
+    <button id="park-EPCOT" onclick="setPark('EPCOT')">EPCOT</button>
+    <button id="park-Hollywood Studios" onclick="setPark('Hollywood Studios')">Hollywood</button>
+    <button id="park-Animal Kingdom" onclick="setPark('Animal Kingdom')">Animal Kingdom</button>
+    <button id="park-Disney Springs" onclick="setPark('Disney Springs')">Disney Springs</button>
+    <button id="park-Resort" onclick="setPark('Resort')">Resorts</button>
+  </div>
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
-}
+  <div class="filter-group">
+    <button id="tried-all" onclick="setTried('all')">All</button>
+    <button id="tried-true" onclick="setTried(true)">Tried ✅</button>
+    <button id="tried-false" onclick="setTried(false)">Not Tried</button>
+  </div>
 
-.card {
-  background: white;
-  border-radius: 15px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+</div>
 
-.card img {
-  width: 100%;
-  border-radius: 10px;
-}
+<div id="snackGrid" class="grid"></div>
 
-.card h3 {
-  margin: 10px 0 5px;
-}
+<script src="data.js"></script>
+<script src="app.js"></script>
 
-.park {
-  color: #ff4d4d;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.location {
-  color: #666;
-  font-size: 13px;
-  font-style: italic;
-}
-
-label {
-  display: block;
-  margin-top: 8px;
-}
+</body>
+</html>
