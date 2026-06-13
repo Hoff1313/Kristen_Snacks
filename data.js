@@ -12,7 +12,7 @@ window.SNACKS = [
 { id: 10, name: "Sweet Spicy Waffle", park: "Magic Kingdom", location: "Sleepy Hollow", image: "snack_10.png", tried: false },
 { id: 11, name: "Candied Bacon", park: "Magic Kingdom", location: "Golden Oak Outpost", image: "snack_11.png", tried: false },
 { id: 12, name: "PBJ Croissant", park: "Resort", location: "Pop Century", image: "snack_12.png", tried: false },
-{ id: 13, name: "Pretzel", park: "Disney Springs", location: "Wetzels Pretzels", image: "snack_13.png", tried: false },
+{ id: 13, name: "Cinnamon or Pizza Pretzel", park: "Resort", location: "El Mercado de Coranado", image: "snack_13.png", tried: false },
 { id: 14, name: "Mac and Pork", park: "Animal Kingdom", location: "Flame Tree BBQ", image: "snack_14.png", tried: false },
 { id: 15, name: "Chicken and Waffles", park: "Resort", location: "Topolinos Terrace", image: "snack_15.png", tried: false },
 { id: 16, name: "Cookie Dough Croissant", park: "Resort", location: "Contempo Cafe", image: "snack_16.png", tried: false },
